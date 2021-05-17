@@ -16,7 +16,9 @@ kernel void manhattan(int N,__global int *A,__global int *numeros,__global int *
     
     int k;
 	int distAux;
-	
+	int cont;
+
+	cont = 0;
 	distancias[i] = 0;
 
 	for (int F = 0; F < N; F++)
@@ -25,29 +27,20 @@ kernel void manhattan(int N,__global int *A,__global int *numeros,__global int *
 		{
 			if(numeros[i]== A[F*N+C])
 			{
-				pos[0+i*N*N].fila = F; // sustituir pos por unas variables, no uso el vector
+				pos[0+i*N*N].fila = F; 
 				pos[0+i*N*N].columna = C;
-
-				k = 1;
-				distAux = 0;
-
-				for (int f = F; f < N; f++)
-				{
-					for (int c = 0; c < N; c++)
-					{
-						if(numeros[i]== A[f*N+c])
-						{
-							pos[k+i*N*N].fila = f;
-							pos[k+i*N*N].columna = c;
-							distAux = calDistancia(pos[0+i*N*N], pos[k+i*N*N]);
-							if(distAux > distancias[i])
-							{
-								distancias[i] = distAux;
-							}
-							k++;
-						}
-					}
-				}
+				cont++;
+			}
+		}
+	}
+	for(int j = 0; j < cont; j++)
+	{
+		for(int k = j+1; k < cont; k++)
+		{
+			distAux = calDistancia(pos[j+i*N*N], pos[k+i*N*N]);
+			if(distAux > distancias[i])
+			{
+				distancias[i] = distAux;
 			}
 		}
 	}
