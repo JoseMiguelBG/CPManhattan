@@ -102,7 +102,6 @@ typedef struct
     cl_program programa;
     cl_kernel kernel;
     cl_uint num_plataformas, num_dispositivos;
-    cl_event evento;
 } EntornoOCL_t;
 
 // **************************************************************************
@@ -422,12 +421,6 @@ cl_int LiberarEntornoOCL(EntornoOCL_t *entorno)
         CodigoError(error);
         return error;
     }
-    error = clReleaseEvent(entorno->evento);
-    if (error != CL_SUCCESS)
-    {
-        CodigoError(error);
-        return error;
-    }
 }
 
 /*
@@ -450,6 +443,7 @@ void ocl(int N, int *A, int n, int *numeros, int *distancias, EntornoOCL_t entor
 {
     cl_int error;
     size_t work_size = n;
+    cl_event evento;
     cl_mem buffA, buffNum, buffDis, buffPos;
 	Matriz *pos = new Matriz[N*N*n];
 
@@ -500,7 +494,7 @@ void ocl(int N, int *A, int n, int *numeros, int *distancias, EntornoOCL_t entor
         CodigoError(error);
     }
 
-    error = clEnqueueNDRangeKernel(entorno.cola, entorno.kernel, entorno.num_dispositivos, NULL, &work_size, NULL, 0, NULL, &entorno.evento);
+    error = clEnqueueNDRangeKernel(entorno.cola, entorno.kernel, entorno.num_dispositivos, NULL, &work_size, NULL, 0, NULL, &evento);
     if (error != CL_SUCCESS)
     {
         CodigoError(error);
@@ -510,8 +504,7 @@ void ocl(int N, int *A, int n, int *numeros, int *distancias, EntornoOCL_t entor
     {
         CodigoError(error);
     }
-
-
+    delete pos;
 }
 // **************************************************************************
 // *************************** FIN IMPLEMENTACI�N ***************************

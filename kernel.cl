@@ -1,9 +1,3 @@
-typedef struct 
-{
-	int fila;
-	int columna;
-} Matriz;
-
 int calDistancia(Matriz posa, Matriz posb){
 	int distancia = 0;
 	distancia = abs(posb.fila - posa.fila) + abs(posb.columna - posa.columna);
@@ -14,7 +8,6 @@ kernel void manhattan(int N,__global int *A,__global int *numeros,__global int *
     size_t i = get_global_id(0);
     size_t NumWrokItems = get_global_size(0);
     
-	Matriz *pos = new Matriz[N*N*n];
     int k;
 	int distAux;
 	int cont;
@@ -46,5 +39,4 @@ kernel void manhattan(int N,__global int *A,__global int *numeros,__global int *
 			}
 		}
 	}
-    delete pos;
 }
