@@ -1,8 +1,8 @@
-int calDistancia(Matriz posa, Matriz posb){
-	int distancia = 0;
-	distancia = abs(posb.fila - posa.fila) + abs(posb.columna - posa.columna);
-	return distancia;
-}
+//int calDistancia(Matriz posa, Matriz posb){
+//	int distancia = 0;
+//	distancia = abs(posb.fila - posa.fila) + abs(posb.columna - posa.columna);
+//	return distancia;
+//}
 
 kernel void manhattan(int N,__global int *A,__global int *numeros,__global int *distancias,__global Matriz *pos){
     size_t i = get_global_id(0);
@@ -32,7 +32,8 @@ kernel void manhattan(int N,__global int *A,__global int *numeros,__global int *
 	{
 		for(int k = j+1; k < cont; k++)
 		{
-			distAux = calDistancia(pos[j+i*N*N], pos[k+i*N*N]);
+			distAux = abs(pos[j+i*N*N].fila - pos[k+i*N*N].fila) + abs(pos[j+i*N*N].columna - pos[k+i*N*N].columna);
+			//distAux = calDistancia(, pos[k+i*N*N]);
 			if(distAux > distancias[i])
 			{
 				distancias[i] = distAux;
