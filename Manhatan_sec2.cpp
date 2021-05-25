@@ -101,29 +101,30 @@ void sec(int N, int *A, int n, int *numeros, int *distancias)
 	Matriz *pos = new Matriz[N * N];
 	int k;
 	int distAux;
-	int cont;
-	cont = 0;
-	distancias[i] = 0;
+	int *cont = new int[n];
+
 	for (int i = 0; i < n; i++)
 	{
+		distancias[i] = 0;
+		cont[i] = 0;
 		for (int F = 0; F < N; F++)
 		{
 			for (int C = 0; C < N; C++)
 			{
 				if (numeros[i] == A[F * N + C])
 				{
-					pos[cont + i * N * N].fila = F;
-					pos[cont + i * N * N].columna = C;
-					cont++;
+					pos[cont[i] + i * N * N].fila = F;
+					pos[cont[i] + i * N * N].columna = C;
+					cont[i]++;
 				}
 			}
 		}
 	}
 	for (int i = 0; i < n; i++)
 	{
-		for (int j = 0; j < cont; j++)
+		for (int j = 0; j < cont[i]; j++)
 		{
-			for (int k = j + 1; k < cont; k++)
+			for (int k = j + 1; k < cont[i]; k++)
 			{
 				distAux = abs(pos[j + i * N * N].fila - pos[k + i * N * N].fila) + abs(pos[j + i * N * N].columna - pos[k + i * N * N].columna);
 				//distAux = calDistancia(, pos[k+i*N*N]);
