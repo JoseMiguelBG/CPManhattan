@@ -379,7 +379,7 @@ cl_int InicializarEntornoOCL(EntornoOCL_t *entorno)
 		CodigoError(error);
 		return error;
 	}
-	CrearPrograma(entorno->programa, entorno->contexto, entorno->num_dispositivos, entorno->dispositivos, "", "kernel2.cl");
+	CrearPrograma(entorno->programa, entorno->contexto, entorno->num_dispositivos, entorno->dispositivos, "", "kernel.cl");
 	entorno->kernel = clCreateKernel(entorno->programa, "manhattan", &error);
 	if (error != CL_SUCCESS)
 	{
