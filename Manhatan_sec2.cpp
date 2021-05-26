@@ -89,13 +89,6 @@ struct Matriz
 	int columna;
 };
 
-int calDistancia(Matriz posa, Matriz posb)
-{
-	int distancia = 0;
-	distancia = abs(posb.fila - posa.fila) + abs(posb.columna - posa.columna);
-	return distancia;
-}
-
 void sec(int N, int *A, int n, int *numeros, int *distancias)
 {
 	Matriz *pos = new Matriz[N * N];
@@ -105,7 +98,6 @@ void sec(int N, int *A, int n, int *numeros, int *distancias)
 
 	for (int i = 0; i < n; i++)
 	{
-		distancias[i] = 0;
 		cont[i] = 0;
 		for (int F = 0; F < N; F++)
 		{
@@ -122,12 +114,12 @@ void sec(int N, int *A, int n, int *numeros, int *distancias)
 	}
 	for (int i = 0; i < n; i++)
 	{
+		distancias[i] = 0;
 		for (int j = 0; j < cont[i]; j++)
 		{
 			for (int k = j + 1; k < cont[i]; k++)
 			{
 				distAux = abs(pos[j + i * N * N].fila - pos[k + i * N * N].fila) + abs(pos[j + i * N * N].columna - pos[k + i * N * N].columna);
-				//distAux = calDistancia(, pos[k+i*N*N]);
 				if (distAux > distancias[i])
 				{
 					distancias[i] = distAux;
@@ -136,6 +128,7 @@ void sec(int N, int *A, int n, int *numeros, int *distancias)
 		}
 	}
 	delete pos;
+	delete cont;
 }
 // **************************************************************************
 // *************************** FIN IMPLEMENTACI�N ***************************
