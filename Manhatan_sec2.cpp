@@ -94,7 +94,8 @@ void sec(int N, int *A, int n, int *numeros, int *distancias)
 	Matriz *pos = new Matriz[N * N];
 	int k;
 	int distAux;
-	int *cont = new int[n];
+	int *cont;
+	cont = (int *) malloc(sizeof(int)*n);
 
 	for (int i = 0; i < n; i++)
 	{
@@ -128,7 +129,7 @@ void sec(int N, int *A, int n, int *numeros, int *distancias)
 		}
 	}
 	delete pos;
-	delete cont;
+	free(cont);
 }
 // **************************************************************************
 // *************************** FIN IMPLEMENTACI�N ***************************
